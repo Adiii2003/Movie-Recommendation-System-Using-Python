@@ -2,10 +2,15 @@
 __pycache__/
 .venv/
 *.pyc
+# ignore large pickle
+similarity.pkl
 
+# ignore all .pkl by default, but allow the small movie_list.pkl
+*.pkl
+!movie_list.pkl
 # Local data/artifacts
 .env
-*.pkl
+
 data/*.csv
 
 # VS Code
