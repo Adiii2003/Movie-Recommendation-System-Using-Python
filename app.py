@@ -106,6 +106,7 @@ GDRIVE_FILE_ID = st.secrets.get("GDRIVE_FILE_ID", DEFAULT_FILE_ID)
 DRIVE_URL = f"https://drive.google.com/uc?id={GDRIVE_FILE_ID}"
 
 
+
 # --- Load Artifacts with caching ---
 @st.cache_data(show_spinner=False)
 def load_movie_list(path=MOVIE_LIST_PKL):
@@ -119,7 +120,7 @@ def load_movie_list(path=MOVIE_LIST_PKL):
 def load_similarity(path=SIMILARITY_PKL, drive_url=DRIVE_URL):
     # Download only if not present
     if not os.path.exists(path):
-        st.info("Downloading similarity matrix (first run)...")
+        # st.info("Downloading similarity matrix (first run)...")
         # gdown will follow the Drive confirm page for large files
         gdown.download(drive_url, path, quiet=False)
         if not os.path.exists(path):
