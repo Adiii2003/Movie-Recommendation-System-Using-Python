@@ -25,16 +25,20 @@ yaml
 Copy
 Edit
 
-> ⚠️ `similarity.pkl` can be large (>100MB) and should **not** be committed to GitHub. Use external hosting (Google Drive / Hugging Face / S3) and download at runtime — example included below.
+## 🚀 Run locally (development)
 
----
-
-## 💻 Run locally (development)
 1. Create and activate a virtual environment (recommended):
+
 ```bash
+# Create virtual environment
 python -m venv .venv
-# Windows
+
+# Windows (PowerShell)
+.venv\Scripts\Activate.ps1
+
+# Windows (cmd)
 .venv\Scripts\activate
+
 # macOS / Linux
 source .venv/bin/activate
 Install dependencies:
@@ -50,22 +54,27 @@ Copy
 Edit
 streamlit run app.py
 ☁️ Deploy to Streamlit Cloud
-Push your repo (without similarity.pkl) to GitHub.
+Push your repo (do not include similarity.pkl) to GitHub.
 
-In Streamlit Cloud, create a new app and connect to this GitHub repo/branch.
+In Streamlit Cloud, create a new app and connect it to this GitHub repo & branch.
 
-Ensure requirements.txt is present.
+Make sure requirements.txt is present.
 
-Host similarity.pkl externally (see below) so the app downloads it on first run.
+Host similarity.pkl externally (Google Drive / Hugging Face / S3) and let the app download it at runtime (example below).
 
-🔗 Recommended way to host large similarity.pkl
+🔗 Recommended: host large similarity.pkl externally
+similarity.pkl can be large (>100 MB). Do not commit it to GitHub.
+
 Option A — Google Drive (simple)
+Upload similarity.pkl to Google Drive and make the file shareable.
 
-Upload similarity.pkl to Google Drive and make it shareable.
+Add gdown to requirements.txt:
 
-Use gdown to download in the app.
-
-Add gdown to your requirements.txt and use this snippet in app.py:
+nginx
+Copy
+Edit
+gdown
+Use this snippet in app.py to download and load the file (only once per session):
 
 python
 Copy
@@ -88,11 +97,11 @@ def get_similarity():
         return pickle.load(f)
 
 similarity = get_similarity()
-Option B — Hugging Face / S3
-Upload the file to a stable host and download it with requests the same way.
+Option B — Hugging Face / S3 / other host
+Upload the file to a stable host and download it at runtime with requests or similar, then load with pickle.
 
 ✅ Best practices
-Add this to .gitignore:
+Add to .gitignore:
 
 bash
 Copy
@@ -101,16 +110,22 @@ Edit
 similarity.pkl
 Keep movie_list.pkl (small mapping of movie_id → title) in the repo so the UI has titles.
 
-Cache heavy loads in Streamlit with @st.cache_resource (or @st.cache_data where appropriate).
+Cache heavy loads in Streamlit using @st.cache_resource or @st.cache_data depending on the data type.
+
+Do not commit files larger than 100 MB to GitHub. Use Git LFS or external hosting if necessary.
 
 🛠 Troubleshooting
-Push rejected due to large file: GitHub rejects files >100MB. If you accidentally committed a large file, remove it from history (use git filter-repo or BFG) or delete the repo and re-create without the large file.
+Push rejected: large file (>100MB)
+GitHub rejects files over 100 MB. If you accidentally committed a large file, remove it from history with git filter-repo or BFG, or delete and recreate the repo (clean commit without the large file).
 
-Line-ending warnings on Windows: Run git config core.autocrlf true to avoid LF/CRLF warnings.
+Line-ending warnings on Windows
+Run:
 
+bash
+Copy
+Edit
+git config core.autocrlf true
 🤝 Contributing
-Fork the repo
 
-Create a branch feature/your-feature
 
-Open a PR — explain your change and how to test it
+Open a Pull Request describing your change and how to test itange and how to test it
