@@ -15,3 +15,6 @@ data/*.csv
 
 # VS Code
 .vscode/
+
+# local secrets (don’t push to GitHub)
+.streamlit/secrets.toml
