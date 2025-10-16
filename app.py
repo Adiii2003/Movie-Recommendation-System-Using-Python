@@ -107,7 +107,7 @@ if st.button("Show Recommendations"):
 
 
 
-
+# this is the previous version without Google Drive integration
 
 # import os
 # import pickle
