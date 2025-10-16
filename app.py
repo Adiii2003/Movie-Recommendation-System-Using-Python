@@ -16,10 +16,10 @@ if not TMDB_KEY:
     st.error("TMDB_API_KEY missing. Create .env with TMDB_API_KEY=your_key")
     st.stop()
 
-
 # --- Streamlit Config ---
 st.set_page_config(page_title="🎬 Movie Recommender", layout="wide")
 
+# --- File Paths and Google Drive Setup ---
 
 BASE_DIR = os.path.dirname(__file__)
 MOVIE_LIST_PKL = os.path.join(BASE_DIR, "movie_list.pkl")
